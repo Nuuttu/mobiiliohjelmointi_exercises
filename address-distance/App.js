@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
+
 export default function App() {
   const baseUrl = 'http://www.mapquestapi.com/datamanager/v2/get-custom-permissions?key=KEY&inFormat=json&outFormat=json'
   const [ placeFrom, setPlaceFrom ] = useState('')
@@ -87,7 +88,10 @@ export default function App() {
   }
 
   const handleMeasurePress = () => {
+    /*
     setRegion({...region, latitude: (marker1.coordinates.latitude + marker2.coordinates.latitude) / 2, longitude: (marker1.coordinates.longitude + marker2.coordinates.longitude) / 2})
+    */
+   
   }
 
   console.log('marker1 lat', marker1.coordinates.latitude)
@@ -97,7 +101,7 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <MapView style={{ flex: 3, width: '100%' }} region={region} >
+      <MapView style={{ flex: 3, width: '100%' }} initialRegion={region}  >
         <Marker 
           draggable 
           coordinate={marker1.coordinates} 
@@ -114,7 +118,7 @@ export default function App() {
         </Marker>
 
       </MapView>
-      <View style={{ flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row', width: '100%'}}>
         <View style={styles.inputStyle}>
           <TextInput
             onChangeText={setPlaceFrom}
@@ -133,8 +137,8 @@ export default function App() {
           <Button onPress={handleMeasurePress} title='MEASURE DISTANCE'></Button>
         </View>
         <View>
-          <Button title='current location'></Button>
-          <Button title='current location'></Button>
+          <Button title='current'></Button>
+          <Button title='current'></Button>
         </View>
       </View>
       <StatusBar style="auto" />
