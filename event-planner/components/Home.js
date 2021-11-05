@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 
 
@@ -10,6 +10,11 @@ function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
+         <Header
+  leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
+  centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+  rightComponent={{ icon: 'home', color: '#fff' }}
+/>
       <Text style={{ fontSize: 18 }}>Home</Text>
       
       <Icon reverse type="material"reversecolor="lightblue" name="alarm"  />

@@ -9,12 +9,13 @@ import EventsNavigation from './components/EventsNavigation';
 import { AntDesign } from '@expo/vector-icons';
 
 
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-
     
+   
       <NavigationContainer>
         <Tab.Navigator screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -32,7 +33,7 @@ export default function App() {
           <Tab.Screen name="Events" component={EventsNavigation} />
         </Tab.Navigator>
       </NavigationContainer>
-    
+  
   );
 }
 
