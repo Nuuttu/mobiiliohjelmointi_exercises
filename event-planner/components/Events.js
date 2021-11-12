@@ -26,8 +26,8 @@ function Events({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 18 }}>Events</Text>
-      <Button title="Mores..." onPress={() => navigation.navigate('More')} />
-      <Button title="Map" onPress={() => navigation.navigate('MapView')} />
+      <Button title="Create event" onPress={() => navigation.navigate('EventCreateForm')} />
+      <Button title="Map of all events" onPress={() => navigation.navigate('MapView', {text: "text from params"})} />
 
 
       <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -47,8 +47,6 @@ function Events({ navigation }) {
                   type='ionicon'
                   color='#517fa4'
                   onPress={() => navigation.navigate('EventView', { title: item.title })} />} type='clear' />
-
-             
             </View>}
           data={d}
         />

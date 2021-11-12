@@ -4,18 +4,14 @@ import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 
 
-function Home({ navigation }) {
+function EventCreateForm({ navigation }) {
 
   
 
   return (
     <View style={styles.container}>
-        <Header
-          leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
-          centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'home', color: '#fff' }}
-        />
-      <Text style={{ fontSize: 18 }}>Home</Text>
+        
+      <Text style={{ fontSize: 18 }}>EventCreateForm</Text>
       
       <Button 
       icon={<Icon 
@@ -23,7 +19,7 @@ function Home({ navigation }) {
         type="material"
         reversecolor="lightblue" 
         name="alarm" 
-        onPress={() => navigation.navigate('Events')}
+        onPress={() => navigation.navigate('Home')}
          />} 
       type='clear'
       />
@@ -40,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default EventCreateForm;

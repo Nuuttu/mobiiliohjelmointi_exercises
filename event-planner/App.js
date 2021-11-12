@@ -28,6 +28,7 @@ export default function App() {
               iconName = 'md-settings';
             return <AntDesign name="bars" size={size} color={color} />
           },
+           headerShown: false
         })}>
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Events" component={EventsNavigation} />

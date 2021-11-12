@@ -2,11 +2,14 @@ import React from 'react';
 //import MapView, { Marker } from "react-native-maps";
 import { Text, View, StyleSheet, Button } from 'react-native';
 
-export default function MapPage() {
+export default function MapPage({ route, navigation }) {
+console.log('route params', route)
+
 
 return(
   <View style={styles.redContainer}>
     <Text>MAP PAGE</Text>
+    <Text>{route.params.text}</Text>
   </View>
 )}
 
