@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import { useSelector, useDispatch } from 'react-redux'
+import { setEvents } from '../store/eventAction';
+import { SET_EVENTS } from '../store/eventTypes';
 
-
-function Events({ navigation }) {
-
-  const d = [
+function Events({ route, navigation }) {
+  const dispatch = useDispatch()
+console.log(`route.params`, route.params)
+  const [ d, setD ] = useState([
     {
       title: 'Dee',
       place: 'Katu',
@@ -21,7 +24,13 @@ function Events({ navigation }) {
       place: 'Katu2',
       datetime: '12-42-3212-12.12.32'
     }
-  ]
+  ])
+
+  dispatch(setEvents(d))
+
+  const de = useSelector(state => state.events)
+  console.log('de', de)
+  
 
   return (
     <View style={styles.container}>
@@ -37,7 +46,7 @@ function Events({ navigation }) {
           renderItem={({ item }) =>
             <View style={styles.listStyle}>
               <Text>
-                {item.title} -
+                {item.name} -
                 {item.place} -
                 {item.datetime} -
                 </Text>
@@ -48,7 +57,7 @@ function Events({ navigation }) {
                   color='#517fa4'
                   onPress={() => navigation.navigate('EventView', { title: item.title })} />} type='clear' />
             </View>}
-          data={d}
+          data={de}
         />
       </View>
     </View>

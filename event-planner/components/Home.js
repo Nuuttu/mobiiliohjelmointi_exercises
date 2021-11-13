@@ -3,10 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 
-
 function Home({ navigation }) {
-
-  
 
   return (
     <View style={styles.container}>
