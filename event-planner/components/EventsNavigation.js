@@ -5,6 +5,7 @@ import MapPage from './MapPage';
 import Events from './Events';
 import EventView from './EventView';
 import EventCreateForm from './EventCreateForm';
+import EventFormModal from './EventFormModal';
 
 const Stack = createStackNavigator();
 

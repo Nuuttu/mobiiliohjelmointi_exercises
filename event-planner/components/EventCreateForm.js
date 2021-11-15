@@ -8,7 +8,7 @@ import firebase from 'firebase';
 
 
 function EventCreateForm({ navigation }) {
-
+  const [value, setValue] = useState(0);
   const [ e, setE ] = useState({
     "name": '',
     "coordinates": {
@@ -36,10 +36,12 @@ function EventCreateForm({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-        
+    
+    <View >
+      {/*<View style={styles.container}> */}    
       <Text style={{ fontSize: 18 }}>EventCreateForm</Text>
       
+      {/*
       <Button 
       icon={<Icon 
         reverse 
@@ -50,6 +52,7 @@ function EventCreateForm({ navigation }) {
          />} 
       type='clear'
       />
+        */}
 
       <View style={{height:100, flex:1}}>
         <View style={{height: 150, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
@@ -88,6 +91,32 @@ function EventCreateForm({ navigation }) {
     </View>
   );
 }
+
+/*
+<Box alignItems="flex-end" p="8">
+  <VStack alignItems="flex-end" space="5">
+    <FormControl>
+      <FormControl.Label mb="3">What's your event called?</FormControl.Label>
+      <Input placeholder="Event's Name" />
+    </FormControl>
+    <FormControl>
+      <FormControl.Label mb="3">When is your Event?</FormControl.Label>
+      <Radio.Group nativeID="patani" name="day_night">
+        <VStack space="3">
+          <Radio value="day">Day</Radio>
+          <Radio value="night">Night</Radio>
+        </VStack>
+      </Radio.Group>
+    </FormControl>
+    <Divider />
+    <Checkbox size="sm" value="tnc" justifyContent="center" mb="4">
+      I agree to Terms and conditions
+    </Checkbox>
+  </VStack>
+  <Button mt="2" endIcon={<AddIcon size="3" />}>Create Event</Button>
+</Box>
+*/
+
 
 const {height, width} = Dimensions.get('window');
 

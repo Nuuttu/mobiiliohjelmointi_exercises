@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 
 function More() {
   return(
-    <View style={styles.container}>
+    <View>
       <Text style={{ fontSize: 18 }}>Mores</Text> 
     </View>
   );

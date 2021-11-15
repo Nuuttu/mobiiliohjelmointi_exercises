@@ -4,6 +4,7 @@ import { Button, Icon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { setEvents } from '../store/eventAction';
 import { SET_EVENTS } from '../store/eventTypes';
+import EventFormModal from './EventFormModal';
 
 function Events({ route, navigation }) {
   const dispatch = useDispatch()
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
+  
 
 });
 
