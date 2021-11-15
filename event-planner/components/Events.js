@@ -7,7 +7,7 @@ import { SET_EVENTS } from '../store/eventTypes';
 
 function Events({ route, navigation }) {
   const dispatch = useDispatch()
-console.log(`route.params`, route.params)
+  
   const [ d, setD ] = useState([
     {
       title: 'Dee',
@@ -26,11 +26,11 @@ console.log(`route.params`, route.params)
     }
   ])
 
-  dispatch(setEvents(d))
+  //dispatch(setEvents(d))
 
   const de = useSelector(state => state.events)
   console.log('de', de)
-  
+  console.log('route to events', route)
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ console.log(`route.params`, route.params)
                   name='ios-american-football'
                   type='ionicon'
                   color='#517fa4'
-                  onPress={() => navigation.navigate('EventView', { title: item.title })} />} type='clear' />
+                  onPress={() => navigation.navigate('EventView', { name: item.name })} />} type='clear' />
             </View>}
           data={de}
         />

@@ -39,51 +39,21 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+import EventApp from './EventApp';
 
-const Tab = createBottomTabNavigator();
+
 
 export default function App() {
   
-  const [events, setEvents] = useState([])
 
-
-  useEffect(() => {
-    firebase.database().ref('items/').on('value', snapshot=> {
-      const data = snapshot.val();
-      console.log('data', data)
-      const prods = Object.values(data);
-      console.log('prods', prods)
-      setEvents(prods);
-
-    });
-  }, []);
-
-  console.log('events', events)
 
   return (
-    // CHECK HOW TO SET STATES GLOBALLY. CAN'T DO IT OUTSIDE OF PROVIDER
+    // RECONFIGURING APP STRUCTURE TO ENABLE REDUX FUNCTIONALITY
     <Provider store={store}>
    
-      <NavigationContainer>
-        <Tab.Navigator screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if (route.name === 'Home') {
-              iconName = 'md-home';
-              return <Ionicons name={iconName} size={size} color={color} />
-            }
-            else if (route.name === 'Events')
-              iconName = 'md-settings';
-            return <AntDesign name="bars" size={size} color={color} />
-          },
-           headerShown: false
-        })}>
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Events" component={EventsNavigation} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <EventApp />
 
-  </Provider>
+    </Provider>
   );
 }
 

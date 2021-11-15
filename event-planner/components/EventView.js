@@ -4,12 +4,12 @@ import { Text, View, StyleSheet, FlatList, Button } from 'react-native';
 
 
 export default function EventView({ route, navigation }) {
-  const { title } = route.params;
-  console.log('nn', title)
+  const { name } = route.params;
+  console.log('route.parma', route)
   return(
     <View>
-      <Text>title: {JSON.stringify(title)} </Text>
-      <Button title="Map of this event" onPress={() => navigation.navigate('MapView', {text: JSON.stringify(title)})} />
+      <Text>title: {name} </Text>
+      <Button title="Map of this event" onPress={() => navigation.navigate('MapView', {text: name})} />
       <Button title="Go back" onPress={() => navigation.goBack()} />
       
 

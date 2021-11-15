@@ -4,11 +4,12 @@ import { Dimensions } from 'react-native';
 import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
+import firebase from 'firebase';
 
 
 function EventCreateForm({ navigation }) {
 
-  const [ event, setEvent ] = useState({
+  const [ e, setE ] = useState({
     "name": '',
     "coordinates": {
       "latitude": 0,
@@ -22,7 +23,7 @@ function EventCreateForm({ navigation }) {
   const [ datetime, setDatetime ] = useState('');
 
   // Save
-  const saveEvent = () => {
+  const saveE = () => {
     firebase.database().ref('items/').push({
       'name': name, 
       'datetime': datetime, 
@@ -77,7 +78,7 @@ function EventCreateForm({ navigation }) {
             placeholder="longitude"
             />
           <View style={{width: '100%',flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
-            <Button style={{width: 40}} onPress={saveEvent} title='Add'/>
+            <Button style={{width: 40}} onPress={saveE} title='Add'/>
             <Button onPress={clear} title='Clear'/>
           </View>
         </View>

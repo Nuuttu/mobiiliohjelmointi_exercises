@@ -21,7 +21,7 @@ function EventsNavigation() {
         name="MapView" 
         component={MapPage} 
         options={({ route }) => ({ 
-          title: route.params.text, 
+          headerTitle: route.params.text, 
           headerStyle: {
             backgroundColor: 'red',
           } 
@@ -31,7 +31,7 @@ function EventsNavigation() {
         name="EventView" 
         component={EventView} 
         options={({ route }) => ({
-          headerTitle: route.params.title,
+          headerTitle: route.params.name,
           headerStyle: {
             backgroundColor: 'red',
           },
