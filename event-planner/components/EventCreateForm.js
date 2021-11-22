@@ -5,6 +5,7 @@ import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 import firebase from 'firebase';
+import Modal from 'react-native-modal';
 
 
 function EventCreateForm({ navigation }) {
@@ -17,9 +18,13 @@ function EventCreateForm({ navigation }) {
     },
     "datetime": ''
   });
+  const [ coordinates, setCoordinates ] = useState({
+    "latitute": null,
+    "longitude": null
+  })
   const [ name, setName ] = useState('');
-  const [ latitude, setLatitude ] = useState([]);
-  const [ longitude, setLongitude ] = useState([]);
+  const [ latitude, setLatitude ] = useState(null);
+  const [ longitude, setLongitude ] = useState(null);
   const [ datetime, setDatetime ] = useState('');
 
   // Save
@@ -27,35 +32,41 @@ function EventCreateForm({ navigation }) {
     firebase.database().ref('items/').push({
       'name': name, 
       'datetime': datetime, 
-      'latitude': latitude, 
-      'longitude': longitude});
+      coordinates: {
+      'latitude': parseFloat(latitude), 
+      'longitude': parseFloat(longitude)
+      }
+    }
+    );
+    navigation.goBack()
   }
 
   const clear = () => {
-    
+    navigation.goBack()
+  }
+
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const CallBackCoordinates = (p) => {
+    console.log('p,', p.latitude)
+    setLatitude(p.latitude)
+    setLongitude(p.longitude)
+    console.log('longitut', longitude)
   }
 
   return (
     
-    <View >
-      {/*<View style={styles.container}> */}    
-      <Text style={{ fontSize: 18 }}>EventCreateForm</Text>
-      
-      {/*
-      <Button 
-      icon={<Icon 
-        reverse 
-        type="material"
-        reversecolor="lightblue" 
-        name="alarm" 
-        onPress={() => navigation.navigate('Home')}
-         />} 
-      type='clear'
-      />
-        */}
+    
 
-      <View style={{height:100, flex:1}}>
-        <View style={{height: 150, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex:1}}>
+
+      
+        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{ fontSize: 18 }}>EventCreateForm</Text>
           <TextInput 
             style={styles.listInput} 
             onChangeText={n => setName(n)}
@@ -68,6 +79,11 @@ function EventCreateForm({ navigation }) {
             value={datetime} 
             placeholder="date and time"
             />
+            <Button 
+              onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}  
+              title='Select on map'
+            />
+            {/**
             <TextInput 
             style={styles.listInput} 
             onChangeText={n => setLatitude(n)}
@@ -80,15 +96,16 @@ function EventCreateForm({ navigation }) {
             value={longitude} 
             placeholder="longitude"
             />
+             */}
           <View style={{width: '100%',flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
             <Button style={{width: 40}} onPress={saveE} title='Add'/>
-            <Button onPress={clear} title='Clear'/>
+            <Button onPress={clear} type='outline' title='Cancel'/>
           </View>
         </View>
         
         <StatusBar style="auto" />
       </View>
-    </View>
+    
   );
 }
 
@@ -128,9 +145,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   listInput: {
+    height: 30,
     width: 250,
     borderColor: 'green',
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: 4
   },
   blueText: {
     fontWeight: '700',
@@ -144,7 +163,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'space-between'
    },
-  redtext: {fontSize:18, color: 'red'},
+  redtext: {
+    fontSize:18, color: 'red'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
 });
 
 export default EventCreateForm;

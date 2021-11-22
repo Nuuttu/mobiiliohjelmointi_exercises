@@ -19,13 +19,25 @@ export default function EventApp() {
 
 
   useEffect(() => {
+
     firebase.database().ref('items/').on('value', snapshot=> {
+      console.log('firebasee', snapshot.val())
       const data = snapshot.val();
-      console.log('data from firebase', data)
+      
       const prods = Object.values(data);
-      console.log('prods from firebase', prods)
+      let dataList = prods.map((d, i) => { console.log('map', d)})
       dispatch(setEvents(prods))
     });
+    /*
+    firebase.database().ref('items/').on('value', snapshot=> {
+      console.log('firebasee', snapshot.val())
+      const data = snapshot.val();
+      
+      const prods = Object.values(data);
+      let dataList = prods.map((d, i) => { console.log('map', d)})
+      dispatch(setEvents(prods))
+    });
+    */
   }, []);
 
   

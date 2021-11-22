@@ -20,20 +20,23 @@ export default function EventFormModal() {
     setIsModalVisible(!isModalVisible);
   };
   return (
-    <View style={styles.container}>
+
+<div>
+    
       <Button title="Create Event" onPress={toggleModal} />
       <Modal
         animationOutTiming={1000}
         animationOut={'slideOutUp'}
         isVisible={isModalVisible}>
-        <View>
-          <More />
+        <View  style={styles.modalView}>
+          <Text> moi </Text>
           <View style={{ marginTop: 150 }}>
             <Button title="Hide modal" onPress={toggleModal} />
           </View>
         </View>
       </Modal>
-    </View>
+ 
+      </div>
   );
 }
 
@@ -43,5 +46,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#E6E6FA',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
 });

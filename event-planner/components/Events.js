@@ -7,6 +7,8 @@ import { SET_EVENTS } from '../store/eventTypes';
 import EventFormModal from './EventFormModal';
 
 function Events({ route, navigation }) {
+  console.log('events route params', route)
+
   const dispatch = useDispatch()
   
   const [ d, setD ] = useState([
@@ -33,11 +35,19 @@ function Events({ route, navigation }) {
   console.log('de', de)
   console.log('route to events', route)
 
+  // Delete
+  const deleteItem = (id) => {
+    console.log('itemid', id)
+    //firebase.database().ref('Users/' + userId).remove();
+  }
+
+//         ASDASDASDASDASD ASDASCIUDHNOAISHUCDOAUSHCDOUH ___________________ DELETE ID FIREBASESTA ???
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 18 }}>Events</Text>
       <Button title="Create event" onPress={() => navigation.navigate('EventCreateForm')} />
-      <Button title="Map of all events" onPress={() => navigation.navigate('MapView', {text: "text from params"})} />
+      <Button title="Map of all events" onPress={() => navigation.navigate('MapView', {itemdata: { name: "All events"}, de})} />
 
 
       <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -56,7 +66,9 @@ function Events({ route, navigation }) {
                   name='ios-american-football'
                   type='ionicon'
                   color='#517fa4'
-                  onPress={() => navigation.navigate('EventView', { name: item.name })} />} type='clear' />
+                  onPress={() => navigation.navigate('EventView', { itemdata: item })} />} type='clear' 
+                  />
+                <Button style={{fontSize: 16, color: '#0000ff', alignSelf: 'flex-end'}} onPress={() => deleteItem(item)} title='delete'></Button>
             </View>}
           data={de}
         />

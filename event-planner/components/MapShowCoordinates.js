@@ -4,16 +4,18 @@ import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
-export default function MapPage({ route, navigation }) {
+export default function MapShowCoordinates({ route, navigation }) {
   console.log('map route params', route)
 
-  //const baseUrl = 'http://www.mapquestapi.com/datamanager/v2/get-custom-permissions?key=KEY&inFormat=json&outFormat=json'
-  const [ placeFrom, setPlaceFrom ] = useState('')
-  const [ placeTo, setPlaceTo ] = useState('')
+  const coords = {
+    "latitude": parseFloat(route.params.itemdata.coordinates.latitude), 
+    "longitude": parseFloat(route.params.itemdata.coordinates.longitude), 
+  }
+  console.log('corods', coords)
 
   const [region, setRegion] = useState({
-    latitude: 60.200692,
-    longitude: 24.934302,
+    latitude: coords.latitude,
+    longitude: coords.longitude,
     latitudeDelta: 0.0322,
     longitudeDelta: 0.0221,
   })
@@ -27,27 +29,13 @@ export default function MapPage({ route, navigation }) {
   })
 
 
-  const handleMarker1Change = (e) => {
-    setMarker1({...marker1, coordinates: e.nativeEvent.coordinate })
-  }
-
-  const handlePlaceFromChange = (e) => {  
-    setPlaceFrom(e.target.value)
-  }
-
-  const handlePlaceToChange = (e) => {  
-    setPlaceTo(e.target.value)
-  }
-
-
-  console.log('coordinates', marker1.coordinates)
-
   return (
     <View style={styles.container}>
 
       <MapView style={{ flex: 3, width: '100%' }} initialRegion={region}  >
         <Marker 
-          coordinate={marker1.coordinates} 
+          
+          coordinate={coords} 
           title={marker1.title} 
           >  
         </Marker>
@@ -62,10 +50,10 @@ export default function MapPage({ route, navigation }) {
             marginLeft: 0,
           }}
           buttonStyle={{width:"100%"}} 
-          title='Back to events'
+          title='Back to event'
           onPress={() => navigation.goBack()}
           ></Button>
-
+              
       </View>
       <StatusBar style="auto" />
     </View>

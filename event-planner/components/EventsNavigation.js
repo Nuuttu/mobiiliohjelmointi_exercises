@@ -6,6 +6,8 @@ import Events from './Events';
 import EventView from './EventView';
 import EventCreateForm from './EventCreateForm';
 import EventFormModal from './EventFormModal';
+import MapSetCoordinates from './MapSetCoordinates';
+import MapShowCoordinates from './MapShowCoordinates';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +24,27 @@ function EventsNavigation() {
         name="MapView" 
         component={MapPage} 
         options={({ route }) => ({ 
-          headerTitle: route.params.text, 
+          headerTitle: 'all events', 
+          headerStyle: {
+            backgroundColor: 'red',
+          } 
+        })} 
+      />
+      <Stack.Screen 
+        name="MapSetCoordinates" 
+        component={MapSetCoordinates} 
+        options={({ route }) => ({ 
+          headerTitle: 'Select place for the event', 
+          headerStyle: {
+            backgroundColor: 'red',
+          } 
+        })} 
+      />
+      <Stack.Screen 
+        name="MapShowCoordinates" 
+        component={MapShowCoordinates} 
+        options={({ route }) => ({ 
+          headerTitle: 'Event on map', 
           headerStyle: {
             backgroundColor: 'red',
           } 

@@ -4,13 +4,10 @@ import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
-export default function MapPage({ route, navigation }) {
+export default function MapSetCoordinates({ route, navigation }) {
   console.log('map route params', route)
 
-  //const baseUrl = 'http://www.mapquestapi.com/datamanager/v2/get-custom-permissions?key=KEY&inFormat=json&outFormat=json'
-  const [ placeFrom, setPlaceFrom ] = useState('')
-  const [ placeTo, setPlaceTo ] = useState('')
-
+  // EHKÄ VOIS LAITTAA REGIONIKS KÄYTTÄJÄN SIJAINTI 
   const [region, setRegion] = useState({
     latitude: 60.200692,
     longitude: 24.934302,
@@ -31,13 +28,6 @@ export default function MapPage({ route, navigation }) {
     setMarker1({...marker1, coordinates: e.nativeEvent.coordinate })
   }
 
-  const handlePlaceFromChange = (e) => {  
-    setPlaceFrom(e.target.value)
-  }
-
-  const handlePlaceToChange = (e) => {  
-    setPlaceTo(e.target.value)
-  }
 
 
   console.log('coordinates', marker1.coordinates)
@@ -45,27 +35,36 @@ export default function MapPage({ route, navigation }) {
   return (
     <View style={styles.container}>
 
-      <MapView style={{ flex: 3, width: '100%' }} initialRegion={region}  >
-        <Marker 
-          coordinate={marker1.coordinates} 
-          title={marker1.title} 
-          >  
-        </Marker>
+      <MapView 
+        style={{ flex: 3, width: '100%' }} 
+        initialRegion={region}  
+        onPress={(e) => handleMarker1Change(e)}
+        >
+          <Marker 
+            
+            coordinate={marker1.coordinates} 
+            title={marker1.title} 
+            onPress={(e) => handleMarker1Change(e)}
+            >  
+          </Marker>
         
 
       </MapView>
       <View containerViewStyle={{width: Dimensions.get('window').width}}>
         
           <Button 
-          containerViewStyle={{
-            width: Dimensions.get('window').width,
-            marginLeft: 0,
-          }}
-          buttonStyle={{width:"100%"}} 
-          title='Back to events'
-          onPress={() => navigation.goBack()}
+            containerViewStyle={{
+              width: Dimensions.get('window').width,
+              marginLeft: 0,
+            }}
+            buttonStyle={{width:"100%"}} 
+            title='Set Coordinates'
+            onPress={() => {
+              route.params?.CallBackCoordinates(marker1.coordinates)
+              navigation.goBack()
+            } }
           ></Button>
-
+        
       </View>
       <StatusBar style="auto" />
     </View>
