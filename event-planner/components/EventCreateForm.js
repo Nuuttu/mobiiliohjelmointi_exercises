@@ -6,6 +6,8 @@ import { Button, Icon, Header } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 import firebase from 'firebase';
 import Modal from 'react-native-modal';
+import DatetimePicker from './DatetimePicker';
+import TimePicker from './TimePicker';
 
 
 function EventCreateForm({ navigation }) {
@@ -25,16 +27,17 @@ function EventCreateForm({ navigation }) {
   const [ name, setName ] = useState('');
   const [ latitude, setLatitude ] = useState(null);
   const [ longitude, setLongitude ] = useState(null);
-  const [ datetime, setDatetime ] = useState('');
+  const [ dt, setDt ] = useState(new Date)
 
   // Save
   const saveE = () => {
+    coordinates.latitude === null ? alert("Needs location") :
     firebase.database().ref('items/').push({
       'name': name, 
-      'datetime': datetime, 
+      'datetime': dt.toString(), 
       coordinates: {
-      'latitude': parseFloat(latitude), 
-      'longitude': parseFloat(longitude)
+        'latitude': parseFloat(latitude), 
+        'longitude': parseFloat(longitude)
       }
     }
     );
@@ -73,16 +76,22 @@ function EventCreateForm({ navigation }) {
             value={name} 
             placeholder="name"
             />
+            <DatetimePicker dt={dt} setDt={setDt} />
+            <TimePicker dt={dt} setDt={setDt} />
+            {/*
             <TextInput 
             style={styles.listInput} 
             onChangeText={n => setDatetime(n)}
             value={datetime} 
             placeholder="date and time"
             />
+            */}
+
             <Button 
               onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}  
               title='Select on map'
             />
+
             {/**
             <TextInput 
             style={styles.listInput} 
@@ -97,7 +106,7 @@ function EventCreateForm({ navigation }) {
             placeholder="longitude"
             />
              */}
-          <View style={{width: '100%',flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
+          <View style={{width: '100%',flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
             <Button style={{width: 40}} onPress={saveE} title='Add'/>
             <Button onPress={clear} type='outline' title='Cancel'/>
           </View>

@@ -5,8 +5,8 @@ import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
 export default function MapPage({ route, navigation }) {
-  console.log('map route params', route)
-
+  console.log('mapPage route params', route)
+  
   //const baseUrl = 'http://www.mapquestapi.com/datamanager/v2/get-custom-permissions?key=KEY&inFormat=json&outFormat=json'
   const [ placeFrom, setPlaceFrom ] = useState('')
   const [ placeTo, setPlaceTo ] = useState('')
@@ -14,8 +14,8 @@ export default function MapPage({ route, navigation }) {
   const [region, setRegion] = useState({
     latitude: 60.200692,
     longitude: 24.934302,
-    latitudeDelta: 0.0322,
-    longitudeDelta: 0.0221,
+    latitudeDelta: 0.2922,
+    longitudeDelta: 0.2921,
   })
 
   const [marker1, setMarker1] = useState({
@@ -26,31 +26,29 @@ export default function MapPage({ route, navigation }) {
     }
   })
 
+  const markerList = route.params.de
+    .map(e => e.coordinates ? e : null )
+    .filter(e => !!e)
 
-  const handleMarker1Change = (e) => {
-    setMarker1({...marker1, coordinates: e.nativeEvent.coordinate })
-  }
-
-  const handlePlaceFromChange = (e) => {  
-    setPlaceFrom(e.target.value)
-  }
-
-  const handlePlaceToChange = (e) => {  
-    setPlaceTo(e.target.value)
-  }
+  console.log('markerList', markerList)
 
 
-  console.log('coordinates', marker1.coordinates)
 
   return (
     <View style={styles.container}>
 
       <MapView style={{ flex: 3, width: '100%' }} initialRegion={region}  >
-        <Marker 
-          coordinate={marker1.coordinates} 
-          title={marker1.title} 
+
+        {markerList.map((m, i) => (
+          <Marker 
+            key={i}
+            title={m.name}
+            coordinate={m.coordinates} 
           >  
-        </Marker>
+          </Marker>
+        ))
+        }
+        
         
 
       </MapView>

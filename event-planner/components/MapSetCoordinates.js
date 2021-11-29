@@ -5,14 +5,14 @@ import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
 export default function MapSetCoordinates({ route, navigation }) {
-  console.log('map route params', route)
+  console.log('mapSetCoordinates route params', route)
 
   // EHKÄ VOIS LAITTAA REGIONIKS KÄYTTÄJÄN SIJAINTI 
   const [region, setRegion] = useState({
     latitude: 60.200692,
     longitude: 24.934302,
-    latitudeDelta: 0.0322,
-    longitudeDelta: 0.0221,
+    latitudeDelta: 0.2922,
+    longitudeDelta: 0.2921,
   })
 
   const [marker1, setMarker1] = useState({

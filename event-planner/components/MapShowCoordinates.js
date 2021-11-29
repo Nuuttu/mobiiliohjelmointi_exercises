@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
 export default function MapShowCoordinates({ route, navigation }) {
-  console.log('map route params', route)
+  console.log('mapShowCoordinates route params', route)
 
   const coords = {
     "latitude": parseFloat(route.params.itemdata.coordinates.latitude), 
@@ -49,8 +49,8 @@ export default function MapShowCoordinates({ route, navigation }) {
             width: Dimensions.get('window').width,
             marginLeft: 0,
           }}
-          buttonStyle={{width:"100%"}} 
-          title='Back to event'
+          buttonStyle={{width: width}} 
+          title='Back'
           onPress={() => navigation.goBack()}
           ></Button>
               
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 0,
   },
   buttonView: {
     flexDirection: 'row', 

@@ -1,9 +1,8 @@
 import { ADD_EVENT, DELETE_EVENT, DID_EVENT, SET_EVENTS } from "./eventTypes";
 const initialState = {
   events: [
-    { "name": "HTML I", "datetime": "123123", "coordinates": { "latitude": 12, "longitude": 32 } },
-    { "name": "HTML YOU", "datetime": "3232", "coordinates": { "latitude": 12, "longitude": 22 } },
-
+    { "name": "No Events found", "datetime": "123123", "coordinates": { "latitude": 12, "longitude": 32 } },
+    
   ]
 }
 const eventReducer = (state = initialState, action) => {
