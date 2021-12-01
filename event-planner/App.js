@@ -1,12 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './components/Home'
-import { Ionicons } from '@expo/vector-icons';
-import EventsNavigation from './components/EventsNavigation';
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
 import store from './store/store';
 import { Provider } from 'react-redux'
 // Import the functions you need from the SDKs you need

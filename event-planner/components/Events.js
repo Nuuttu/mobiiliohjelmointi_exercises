@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
-import { setEvents } from '../store/eventAction';
-import { SET_EVENTS } from '../store/eventTypes';
-import EventFormModal from './EventFormModal';
 import firebase from 'firebase';
 
 function Events({ route, navigation }) {
@@ -13,8 +10,8 @@ function Events({ route, navigation }) {
   const dispatch = useDispatch()
 
 
-  const de = useSelector(state => state.events)
-
+  const de = useSelector(state => state.eventReducer.events)
+  console.log('de', de)
   var sortedEvents = de.sort((a,b) => {
     return new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
   })

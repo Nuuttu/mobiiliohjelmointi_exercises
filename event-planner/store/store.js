@@ -3,7 +3,16 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import eventReducer from "./eventReducer";
-const store = createStore(eventReducer,
+import firebaseReducer from "./firebaseReducer";
+
+const reducer = combineReducers({
+  eventReducer: eventReducer,
+  firebaseReducer: firebaseReducer,
+})
+
+
+const store = createStore(
+  reducer,
   composeWithDevTools(
     applyMiddleware(thunk)
 ))

@@ -23,12 +23,12 @@ function Home({ navigation }) {
   }
 
 
-  const de = useSelector(state => state.events)
+  const de = useSelector(state => state.eventReducer.events)
 
-  var sortedEvents = de.sort((a,b) => {
+  var sortedEvents = de.sort((a, b) => {
     return new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
   })
-  
+
   var ucEvents = sortedEvents.filter(e => new Date(e.datetime).getTime() >= now.getTime())
 
   return (
@@ -43,38 +43,32 @@ function Home({ navigation }) {
         centerComponent={{ text: 'Event planner', style: { color: '#fff' } }}
       />
       <View style={styles.container}>
-        <Text style={{ fontSize: 18, alignSelf:'center', margin: 4 }}>Upcoming events</Text>
+        <Text style={{ fontSize: 22, alignSelf: 'center', margin: 4 }}>Upcoming events</Text>
 
         <FlatList
           style={{ marginLeft: 0, marginRight: 0 }}
           keyExtractor={(item, index) => 'key' + index}
           renderItem={({ item }) =>
-            <View style={styles.listStyle} >
-              <TouchableOpacity onPress={() => navigation.navigate('EventView', { itemdata: item })}>
+            <TouchableOpacity onPress={() => navigation.navigate('EventView', { itemdata: item })}>
+              <View style={styles.listStyle} >
+
                 <View style={{ flexDirection: 'column' }}>
-                  <Text style={{ fontWeight: 'bold' }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                     {item.name}
                   </Text>
-                  <Text>
-                    {showDate(item.datetime)}
-                  </Text>
-                  <Text>
-                    {showTime(item.datetime)}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              {item.coordinates &&
-                <Button icon={<Icon
-                  reverse
-                  name='ios-navigate'
-                  type='ionicon'
-                  color='#517fa4'
-                  onPress={() => navigation.navigate('MapShowCoordinates', { itemdata: item })} />} type='clear'
-                />
-              }
-              <Button type='clear' buttonStyle={{ fontSize: 16, color: 'red', alignSelf: 'flex-end' }} onPress={() => wannaDelete(item)} title='delete' titleStyle={{ color: 'rgb(255, 102, 102)' }}></Button>
 
-            </View>}
+                </View>
+
+
+                <Text>
+                  {showDate(item.datetime)}
+                </Text>
+                <Text>
+                  {showTime(item.datetime)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          }
           data={ucEvents}
         />
       </View>
@@ -93,7 +87,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
-  },listStyle: {
+  }, listStyle: {
     height: 100,
     backgroundColor: '#fff',
     alignItems: 'center',

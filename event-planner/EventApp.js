@@ -9,7 +9,15 @@ import EventsNavigation from './components/EventsNavigation';
 import { AntDesign } from '@expo/vector-icons';
 import firebase from "firebase";
 import { useDispatch } from 'react-redux';
-import { setEvents } from './store/eventAction';
+// save event data to store for use everywhere inside the app
+import { setEvents } from './store/eventReducer';
+// set firebaseurl so events can be sought at will
+import { setFirebaseUrl } from './store/firebaseReducer';
+
+// ASYNC STORAGE ASENNETTU KÄYTÄ SITÄ LAITTEEN YKSILÖIMISEEN , 
+// VAI PITÄISIKÖ SITTENKIN ANTAA KÄYTTÄJÄN ITSE VALITA, 
+// JOTTA MONET VOISIVAT TARKASTELLA SAMOJA TAPAHTUMIA
+// https://haagahelia-my.sharepoint.com/personal/h01270_haaga-helia_fi/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fh01270%5Fhaaga%2Dhelia%5Ffi%2FDocuments%2FReact%5FMaterial%2FMobile%2FReact%5Fnative%5Fdatabase%5Ffirebase%2Epdf&parent=%2Fpersonal%2Fh01270%5Fhaaga%2Dhelia%5Ffi%2FDocuments%2FReact%5FMaterial%2FMobile
 
 const Tab = createBottomTabNavigator();
 
@@ -18,45 +26,20 @@ export default function EventApp() {
   //const [events, setEvents] = useState([])
 
 
+
   useEffect(() => {
-    var eventList = []
+
     firebase.database().ref('items/').on('value', snapshot => {
 
       if (snapshot.val() !== null) {
-
-        /* TÄMÄ TOIMISI; JOS PÄIVITTÄISI KIVASTI :>
-            NYT TOIMII QUERY NIMEN KAUTTA DELETE NAPPULASSA
-        snapshot.forEach( childSnapshot => {
-          var childData = childSnapshot.val()
-          var itemAdd = {
-            name: childData.name,
-            datetime: childData.datetime,
-            coordinates: childData.coordinates,
-            id: childSnapshot.key
-          }
-          eventList.push(itemAdd)
-        })
-        */
         const data = snapshot.val();
         const prods = Object.values(data);
         dispatch(setEvents(prods))
       }
     });
-    /*
-    firebase.database().ref('items/').on('value', snapshot=> {
-      console.log('firebasee', snapshot.val())
-      const data = snapshot.val();
-      
-      const prods = Object.values(data);
-      let dataList = prods.map((d, i) => { console.log('map', d)})
-      dispatch(setEvents(prods))
-    });
-    */
+   
   }, []);
 
-
-
-  //console.log('events', events)
 
   return (
     <NavigationContainer>
