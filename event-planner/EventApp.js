@@ -60,7 +60,18 @@ export default function EventApp() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={({ route }) => ({
+      <Tab.Navigator 
+      tabBarOptions={{
+       activeTintColor: '#fff',
+       inactiveTintColor: 'rgb(191, 191, 191)',
+       activeBackgroundColor: 'rgb(0, 153, 204)',
+       inactiveBackgroundColor: 'rgb(51, 102, 153)',
+           style: {
+                 backgroundColor: '#CE4418',
+                 paddingBottom: 3
+           }
+    }}
+      screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === 'Home') {

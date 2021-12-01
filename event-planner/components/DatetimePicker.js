@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Button, View } from "react-native";
+import { View } from "react-native";
+import { Button } from 'react-native-elements'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const DatetimePicker = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [ title, setTitle ] = useState("Select Date")
+  const [ buttonType, setButtonType ] = useState('solid')
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -24,14 +26,15 @@ const DatetimePicker = (props) => {
     dd.setFullYear(date.getFullYear())
     props.setDt(dd)
     setTitle(d)
+    setButtonType('clear')
     hideDatePicker();
   };
 
   
 
   return (
-    <View>
-      <Button title={title} onPress={showDatePicker} />
+    <View style={{width:'100%'}}>
+      <Button type={buttonType} title={title} onPress={showDatePicker} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"

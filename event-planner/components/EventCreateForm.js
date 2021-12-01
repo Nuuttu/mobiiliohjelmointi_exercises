@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
-import { Button, Icon, Header } from 'react-native-elements';
+import { Text, View, StyleSheet, TextInput, ImageBackground } from 'react-native';
+import { Button, Icon, Header, Input } from 'react-native-elements';
 import { typography, space, color } from 'styled-system'
 import firebase from 'firebase';
 import Modal from 'react-native-modal';
@@ -11,19 +11,6 @@ import TimePicker from './TimePicker';
 
 
 function EventCreateForm({ navigation }) {
-  const [value, setValue] = useState(0);
-  const [e, setE] = useState({
-    "name": '',
-    "coordinates": {
-      "latitude": 0,
-      "longitude": 0
-    },
-    "datetime": ''
-  });
-  const [coordinates, setCoordinates] = useState({
-    "latitute": null,
-    "longitude": null
-  })
   const [name, setName] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -64,44 +51,55 @@ function EventCreateForm({ navigation }) {
     setIsModalVisible(!isModalVisible);
   };
 
+  const [ coordsButtonText, setCoordsButtonText ] = useState('Select on map')
+  const [ coordsButtonType, setCoordsButtonType ] = useState('solid')
+
   const CallBackCoordinates = (p) => {
     setLatitude(p.latitude)
     setLongitude(p.longitude)
+    setCoordsButtonText('Place Selected')
+    setCoordsButtonType('clear')
   }
 
   return (
 
-
+<ImageBackground
+      source={require('../images/pilvi1.jpg')}
+      resizeMode="cover"
+      imageStyle={{ opacity: 0.2 }}
+      style={styles.image}
+    >
 
     <View style={{ flex: 1 }}>
 
 
       <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 18 }}>EventCreateForm</Text>
-        <TextInput
-          style={styles.listInput}
+        <Text style={{ fontSize: 18, marginTop: 10, marginBottom: 10}}>Create a new Event</Text>
+        
+        <Input
+          placeholder='name'
           onChangeText={n => setName(n)}
           value={name}
-          placeholder="name"
         />
         <DatetimePicker dt={dt} setDt={setDt} />
         <TimePicker dt={dt} setDt={setDt} />
+        <View style={{width:'100%'}}>
+          <Button
+            type={coordsButtonType}
+            onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}
+            title={coordsButtonText}
+          />
+        </View>
 
-        <Button
-          onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}
-          title='Select on map'
-        />
-
-
-        <View style={{ width: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Button style={{ width: 40 }} onPress={saveE} title='Add' />
+        <View style={{ width: '100%', }}>
+          <Button buttonStyle={{backgroundColor:'green'}} style={{ width: 40 }} onPress={saveE} title='Add' />
           <Button onPress={clear} type='outline' title='Cancel' />
         </View>
       </View>
 
       <StatusBar style="auto" />
     </View>
-
+    </ImageBackground>
   );
 }
 
@@ -113,8 +111,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#D3D3D3',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   listInput: {
     height: 30,
@@ -152,6 +148,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    
   },
 });
 

@@ -15,7 +15,7 @@ function EventsNavigation() {
 
   return(
     <Stack.Navigator
-    screenOptions={{ headerStyle: { backgroundColor: 'papayawhip' } }} 
+    screenOptions={{ headerStyle: { backgroundColor: 'rgb(0, 153, 204)' } }} 
     >
       <Stack.Screen name="Main" component={Events} options={{header: () => null}}/>
       <Stack.Screen name="More" component={More} />
@@ -26,7 +26,7 @@ function EventsNavigation() {
         options={({ route }) => ({ 
           headerTitle: 'all events', 
           headerStyle: {
-            backgroundColor: 'red',
+            backgroundColor: 'rgb(0, 153, 204)',
           } 
         })} 
       />
@@ -36,7 +36,7 @@ function EventsNavigation() {
         options={({ route }) => ({ 
           headerTitle: 'Select place for the event', 
           headerStyle: {
-            backgroundColor: 'red',
+            backgroundColor: 'rgb(0, 153, 204)',
           } 
         })} 
       />
@@ -46,7 +46,7 @@ function EventsNavigation() {
         options={({ route }) => ({ 
           headerTitle: 'Event on map', 
           headerStyle: {
-            backgroundColor: 'red',
+            backgroundColor: 'rgb(0, 153, 204)',
           } 
         })} 
       />
@@ -56,7 +56,7 @@ function EventsNavigation() {
         options={({ route }) => ({
           headerTitle: route.params.name,
           headerStyle: {
-            backgroundColor: 'red',
+            backgroundColor: 'rgb(0, 153, 204)',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
