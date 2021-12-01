@@ -16,21 +16,16 @@ export default function MapSetCoordinates({ route, navigation }) {
   })
 
   const [marker1, setMarker1] = useState({
-    title: 'marker1',
+    title: 'place of the event',
     coordinates: {
-      latitude: 60.201373,
-      longitude: 24.934041,
+      latitude: null,
+      longitude: null,
     }
   })
-
-
+  
   const handleMarker1Change = (e) => {
     setMarker1({...marker1, coordinates: e.nativeEvent.coordinate })
   }
-
-
-
-  console.log('coordinates', marker1.coordinates)
 
   return (
     <View style={styles.container}>
@@ -40,14 +35,13 @@ export default function MapSetCoordinates({ route, navigation }) {
         initialRegion={region}  
         onPress={(e) => handleMarker1Change(e)}
         >
+          {marker1.coordinates.latitude !== null &&
           <Marker 
-            
             coordinate={marker1.coordinates} 
             title={marker1.title} 
-            onPress={(e) => handleMarker1Change(e)}
             >  
           </Marker>
-        
+          }
 
       </MapView>
       <View containerViewStyle={{width: Dimensions.get('window').width}}>
@@ -60,6 +54,7 @@ export default function MapSetCoordinates({ route, navigation }) {
             buttonStyle={{width:"100%"}} 
             title='Set Coordinates'
             onPress={() => {
+              console.log('coords', marker1.coordinates)
               route.params?.CallBackCoordinates(marker1.coordinates)
               navigation.goBack()
             } }

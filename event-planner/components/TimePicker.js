@@ -15,7 +15,7 @@ const TimePicker = (props) => {
   };
 
   const handleConfirm = (time) => {
-    console.log("A date has been picked: ", time);
+    console.log("A time has been picked: ", time);
     const t = time.getHours() + ":" + time.getMinutes()
     setTitle(t)
 

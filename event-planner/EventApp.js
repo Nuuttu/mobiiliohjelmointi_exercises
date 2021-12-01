@@ -21,7 +21,6 @@ export default function EventApp() {
   useEffect(() => {
     var eventList = []
     firebase.database().ref('items/').on('value', snapshot => {
-      console.log('firebasee', snapshot.val())
 
       if (snapshot.val() !== null) {
 
@@ -40,7 +39,6 @@ export default function EventApp() {
         */
         const data = snapshot.val();
         const prods = Object.values(data);
-        prods.map(p => console.log('p', p))
         dispatch(setEvents(prods))
       }
     });

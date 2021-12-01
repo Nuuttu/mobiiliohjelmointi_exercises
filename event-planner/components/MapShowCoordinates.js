@@ -5,13 +5,11 @@ import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
 
 export default function MapShowCoordinates({ route, navigation }) {
-  console.log('mapShowCoordinates route params', route)
 
   const coords = {
     "latitude": parseFloat(route.params.itemdata.coordinates.latitude), 
     "longitude": parseFloat(route.params.itemdata.coordinates.longitude), 
   }
-  console.log('corods', coords)
 
   const [region, setRegion] = useState({
     latitude: coords.latitude,
@@ -21,7 +19,7 @@ export default function MapShowCoordinates({ route, navigation }) {
   })
 
   const [marker1, setMarker1] = useState({
-    title: 'marker1',
+    title: route.params.itemdata.name,
     coordinates: {
       latitude: 60.201373,
       longitude: 24.934041,

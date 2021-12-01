@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { setEvents } from '../store/eventAction';
@@ -13,11 +13,7 @@ function Events({ route, navigation }) {
   const dispatch = useDispatch()
 
 
-  //dispatch(setEvents(d))
-
   const de = useSelector(state => state.events)
-  console.log('de', de)
-  console.log('route to events', route)
 
   const showDate = (d) => {
     const da = new Date(d)
@@ -29,46 +25,29 @@ function Events({ route, navigation }) {
     return ti.getHours() + ':' + ti.getMinutes()
   }
 
+  const wannaDelete = (item) =>
+    Alert.alert(
+      "Deleting",
+      item.name,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => deleteItem(item) }
+      ]
+    );
+
   // Delete
   const deleteItem = (item) => {
-    
-    var a = firebase.database().ref().child("items/").orderByChild("name").equalTo(item.name)
-    .on("child_added", function(snapshot) {
-      console.log('to delete', snapshot.key);
-      firebase.database().ref(`items/${snapshot.key}`).remove()
-    });
 
-    console.log('itemid', a)
-    //firebase.database().ref(`items/${item.id}`).remove()
-    
-    
+    firebase.database().ref().child("items/").orderByChild("name").equalTo(item.name)
+      .on("child_added", function (snapshot) {
+        console.log('to delete', snapshot.key);
+        firebase.database().ref(`items/${snapshot.key}`).remove()
+      });
 
-    /*
-      function deleteTodo(clickedElement) {
-          const key = clickedElement.parentElement.getAttribute('data-key');
-          firebase.database().ref('tasks').child(key).remove();
-      }
-    */
-    
-     /*       .remove()
-    .then(console.log('success'))
-    .catch(function(e) {
-      console.log('error', e)
-    })
-    
-
-    /*
-     firebase.database().ref('items/').push({
-      'name': name, 
-      'datetime': dt.toString(), 
-      coordinates: {
-        'latitude': parseFloat(latitude), 
-        'longitude': parseFloat(longitude)
-      }
-    }
-    );
-     */
-    //firebase.database().ref('Users/' + userId).remove();
   }
 
   return (
@@ -85,7 +64,7 @@ function Events({ route, navigation }) {
           renderItem={({ item }) =>
             <View style={styles.listStyle} >
               <TouchableOpacity onPress={() => navigation.navigate('EventView', { itemdata: item })}>
-                <View style={{ flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'column' }}>
                   <Text style={{ fontWeight: 'bold' }}>
                     {item.name}
                   </Text>
@@ -97,15 +76,16 @@ function Events({ route, navigation }) {
                   </Text>
                 </View>
               </TouchableOpacity>
-             <Button  icon={<Icon
-                reverse
-                name='ios-navigate'
-                type='ionicon'
-                color='#517fa4'
-                onPress={() => navigation.navigate('MapShowCoordinates', {itemdata: item})} />} type='clear'
-              />
-              
-              <Button style={{ fontSize: 16, color: '#0000ff', alignSelf: 'flex-end' }} onPress={() => deleteItem(item)} title='delete'></Button>
+              {item.coordinates &&
+                <Button icon={<Icon
+                  reverse
+                  name='ios-navigate'
+                  type='ionicon'
+                  color='#517fa4'
+                  onPress={() => navigation.navigate('MapShowCoordinates', { itemdata: item })} />} type='clear'
+                />
+              }
+              <Button style={{ fontSize: 16, color: '#0000ff', alignSelf: 'flex-end' }} onPress={() => wannaDelete(item)} title='delete'></Button>
 
             </View>}
           data={de}

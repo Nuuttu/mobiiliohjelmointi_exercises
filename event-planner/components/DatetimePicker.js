@@ -17,7 +17,6 @@ const DatetimePicker = (props) => {
   const handleConfirm = (date) => {
     console.log("A date has been picked: ", date);
     const d = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate())
-    console.log('d', d)
 
     const dd = props.dt
     dd.setDate(date.getDate())
