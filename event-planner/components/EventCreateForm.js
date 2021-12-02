@@ -21,12 +21,12 @@ function EventCreateForm({ navigation }) {
     if (name !== '') {
       
       if (latitude === null || longitude === null) {
-        firebase.database().ref('items/').push({
+        firebase.database().ref(`items/`).push({
           'name': name,
           'datetime': dt.toString(),
         })
       } else {
-        firebase.database().ref('items/').push({
+        firebase.database().ref(`items/`).push({
           'name': name,
           'datetime': dt.toString(),
           coordinates: {

@@ -11,13 +11,14 @@ import firebase from "firebase";
 import { useDispatch } from 'react-redux';
 // save event data to store for use everywhere inside the app
 import { setEvents } from './store/eventReducer';
-// set firebaseurl so events can be sought at will
 import { setFirebaseUrl } from './store/firebaseReducer';
+// set firebaseurl so events can be sought at will
+
 
 // ASYNC STORAGE ASENNETTU KÄYTÄ SITÄ LAITTEEN YKSILÖIMISEEN , 
 // VAI PITÄISIKÖ SITTENKIN ANTAA KÄYTTÄJÄN ITSE VALITA, 
 // JOTTA MONET VOISIVAT TARKASTELLA SAMOJA TAPAHTUMIA
-// https://haagahelia-my.sharepoint.com/personal/h01270_haaga-helia_fi/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fh01270%5Fhaaga%2Dhelia%5Ffi%2FDocuments%2FReact%5FMaterial%2FMobile%2FReact%5Fnative%5Fdatabase%5Ffirebase%2Epdf&parent=%2Fpersonal%2Fh01270%5Fhaaga%2Dhelia%5Ffi%2FDocuments%2FReact%5FMaterial%2FMobile
+// 
 
 const Tab = createBottomTabNavigator();
 
@@ -25,11 +26,28 @@ export default function EventApp() {
   const dispatch = useDispatch()
   //const [events, setEvents] = useState([])
 
+  // init event finder term
+  const [finderUrl, setFinderUrl] = useState('')
+  const readFinderData = async () => {
+    try {
+      let value = await AsyncStorage.getItem('firebaseUrl');
+      setFinderUrl(value)
+      console.log('urlset', value)
+    } catch (error) {
+      console.log("moi", error)
+    }
+  }
+// PITÄIS OMAAN SERVICEEN
+  useEffect(async () => {
+    console.log(finderUrl)
+    try {
+      let val = await AsyncStorage.getItem('firebaseUrl')
+      setFirebaseUrl(val)
+    } catch (e) {
+      console.log('e', e)
+    }
 
-
-  useEffect(() => {
-
-    firebase.database().ref('items/').on('value', snapshot => {
+    firebase.database().ref(`items/${finderUrl}`).on('value', snapshot => {
 
       if (snapshot.val() !== null) {
         const data = snapshot.val();
@@ -37,23 +55,25 @@ export default function EventApp() {
         dispatch(setEvents(prods))
       }
     });
-   
-  }, []);
+  
+}, []);
 
 
-  return (
-    <NavigationContainer>
-      <Tab.Navigator 
-      tabBarOptions={{
-       activeTintColor: '#fff',
-       inactiveTintColor: 'rgb(191, 191, 191)',
-       activeBackgroundColor: 'rgb(0, 153, 204)',
-       inactiveBackgroundColor: 'rgb(51, 102, 153)',
-           style: {
-                 backgroundColor: '#CE4418',
-                 paddingBottom: 3
-           }
-    }}
+return (
+  <NavigationContainer>
+    <Tab.Navigator
+      screenOptions={{
+        "tabBarActiveTintColor": "#fff",
+        "tabBarInactiveTintColor": "rgb(191, 191, 191)",
+        "tabBarActiveBackgroundColor": "rgb(0, 153, 204)",
+        "tabBarInactiveBackgroundColor": "rgb(51, 102, 153)",
+        "tabBarStyle": [
+          {
+            "display": "flex"
+          },
+          null
+        ]
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -67,10 +87,10 @@ export default function EventApp() {
         },
         headerShown: false
       })}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Events" component={EventsNavigation} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  )
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Events" component={EventsNavigation} />
+    </Tab.Navigator>
+  </NavigationContainer>
+)
 }
 
