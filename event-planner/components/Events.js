@@ -11,14 +11,16 @@ function Events({ route, navigation }) {
 
 
   const de = useSelector(state => state.eventReducer.events)
+  const firebaseUrl = useSelector(state => state.firebaseReducer.url)
   console.log('de', de)
   var sortedEvents = de.sort((a,b) => {
     return new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
-  })
+  }).filter(a => { if(a.name !== undefined){ return a} })
+  console.log('sorted', sortedEvents)
 
   const showDate = (d) => {
     const da = new Date(d)
-    return da.getFullYear() + '-' + da.getMonth() + '-' + da.getDate()
+    return da.getFullYear() + '-' + (da.getMonth() + 1) + '-' + da.getDate()
   }
 
   const showTime = (d) => {
@@ -33,7 +35,7 @@ function Events({ route, navigation }) {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => console.log("Cancel Pressed", firebaseUrl),
           style: "cancel"
         },
         { text: "OK", onPress: () => deleteItem(item) }

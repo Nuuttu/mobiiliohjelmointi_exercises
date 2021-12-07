@@ -8,6 +8,8 @@ import firebase from 'firebase';
 import Modal from 'react-native-modal';
 import DatetimePicker from './DatetimePicker';
 import TimePicker from './TimePicker';
+import { useSelector } from 'react-redux'
+
 
 
 function EventCreateForm({ navigation }) {
@@ -15,18 +17,19 @@ function EventCreateForm({ navigation }) {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [dt, setDt] = useState(new Date)
+  const firebaseUrl = useSelector(state => state.firebaseReducer.url)
 
   // Save
   const saveE = () => {
     if (name !== '') {
       
       if (latitude === null || longitude === null) {
-        firebase.database().ref(`items/`).push({
+        firebase.database().ref(`items/${firebaseUrl}`).push({
           'name': name,
           'datetime': dt.toString(),
         })
       } else {
-        firebase.database().ref(`items/`).push({
+        firebase.database().ref(`items/${firebaseUrl}`).push({
           'name': name,
           'datetime': dt.toString(),
           coordinates: {

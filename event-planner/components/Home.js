@@ -6,16 +6,19 @@ import { typography, space, color } from 'styled-system'
 import { useSelector, useDispatch } from 'react-redux'
 import { setFirebaseUrl } from '../store/firebaseReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import firebase from "firebase";
+import { setEvents } from '../store/eventReducer';
 
 function Home({ navigation }) {
+  const dispatch = useDispatch()
+  const firebaseUrl = useSelector(state => state.firebaseReducer.url)
 
   const now = new Date
   console.log('now', now)
 
   const showDate = (d) => {
     const da = new Date(d)
-    return da.getFullYear() + '-' + da.getMonth() + '-' + da.getDate()
+    return da.getFullYear() + '-' + (da.getMonth() +1 ) + '-' + da.getDate()
   }
 
   const showTime = (d) => {
@@ -23,19 +26,42 @@ function Home({ navigation }) {
     return ti.getHours() + ':' + ti.getMinutes()
   }
 
-  const [firebaseUrl, setFirebaseUrl] = useState('')
-  const saveFirebaseUrl = async () => {
+  const [finderUrl, setFinderUrl] = useState('')
+  const saveFinderUrl = async () => {
+    console.log('ASDASD')
     try {
-      await AsyncStorage.setItem('firebaseUrl', firebaseUrl);
+      await AsyncStorage.setItem('firebaseUrl', finderUrl);
+      firebase.database().ref(`items/${finderUrl}`).on('value', snapshot => {
+        if (snapshot.val() !== null) {
+          const data = snapshot.val();
+          const prods = Object.values(data);
+          
+          dispatch(setFirebaseUrl(finderUrl))
+          dispatch(setEvents(prods))
+        } else {
+          //Alert.alert("nothing found")
+          dispatch(setFirebaseUrl(finderUrl))
+          dispatch(setEvents([
+            { "name": "No Events found", "datetime": "123123", "coordinates": { "latitude": 12, "longitude": 32 } },
+          ]))
+        }})
     } catch (error) {
       console.log('Errorsavingdata', error);
     }
   }
+
   const readData = async () => {
     try {
       let value = await AsyncStorage.getItem('firebaseUrl');
-      setFirebaseUrl(value)
+      setFinderUrl(value)
       console.log('urlset', value)
+
+      firebase.database().ref(`items/${value}`).on('value', snapshot => {
+        if (snapshot.val() !== null) {
+          const data = snapshot.val();
+          const prods = Object.values(data);
+          dispatch(setEvents(prods))
+        }})
     } catch (error) {
       console.log("moi", error)
     }
@@ -43,8 +69,9 @@ function Home({ navigation }) {
 
   useEffect(() => {
     readData()
-
   }, []);
+
+
 
   const de = useSelector(state => state.eventReducer.events)
   var sortedEvents = de.sort((a, b) => {
@@ -67,13 +94,13 @@ function Home({ navigation }) {
         <View >
           <Input
             placeholder='name'
-            onChangeText={n => setFirebaseUrl(n)}
-            value={firebaseUrl}
+            onChangeText={n => setFinderUrl(n)}
+            value={finderUrl}
           />
           <Button 
           type='clear' 
           buttonStyle={{ fontSize: 16, color: 'blue', backgroundColor: 'rgb(0, 0, 0, 0.4)' }} 
-          onPress={() => saveFirebaseUrl()} 
+          onPress={() => saveFinderUrl()} 
           title='set event finder term' 
           titleStyle={{ color: 'rgb(100, 102, 255)' }}></Button>
 
