@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {  useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Dimensions, YellowBox } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker, MyCustomMarkerView, MyCustomCalloutView, Callout } from 'react-native-maps';
+
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 export default function MapSetCoordinates({ route, navigation }) {
   console.log('mapSetCoordinates route params', route)

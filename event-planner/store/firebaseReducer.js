@@ -7,7 +7,7 @@ export const setFirebaseUrl = (url) => {
 }
 
 const initialState = {
-  url: `firebase.database().ref('items/')`
+  url: ``
 }
 
 const firebaseReducer = (state = initialState, action) => {

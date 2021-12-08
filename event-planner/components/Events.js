@@ -44,10 +44,14 @@ function Events({ route, navigation }) {
 
   // Delete
   const deleteItem = (item) => {
-    firebase.database().ref().child("items/").orderByChild("name").equalTo(item.name)
+    firebase.database().ref().child(`items/${firebaseUrl}`).orderByChild("name").equalTo(item.name)
       .on("child_added", function (snapshot) {
         console.log('to delete', snapshot.key);
-        firebase.database().ref(`items/${snapshot.key}`).remove()
+        if(firebaseUrl === ''){
+          firebase.database().ref(`items/${snapshot.key}`).remove()
+        } else {
+        firebase.database().ref(`items/${firebaseUrl}/${snapshot.key}`).remove()
+        }
       });
 
   }

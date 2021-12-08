@@ -1,11 +1,9 @@
 import React from 'react';
 import { createStackNavigator} from'@react-navigation/stack';
-import More from './More';
 import MapPage from './MapPage';
 import Events from './Events';
 import EventView from './EventView';
 import EventCreateForm from './EventCreateForm';
-import EventFormModal from './EventFormModal';
 import MapSetCoordinates from './MapSetCoordinates';
 import MapShowCoordinates from './MapShowCoordinates';
 
@@ -18,7 +16,6 @@ function EventsNavigation() {
     screenOptions={{ headerStyle: { backgroundColor: 'rgb(0, 153, 204)' } }} 
     >
       <Stack.Screen name="Main" component={Events} options={{header: () => null}}/>
-      <Stack.Screen name="More" component={More} />
       <Stack.Screen name="EventCreateForm" component={EventCreateForm} />
       <Stack.Screen 
         name="MapView" 

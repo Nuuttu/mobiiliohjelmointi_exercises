@@ -1,44 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home'
 import { Ionicons } from '@expo/vector-icons';
 import EventsNavigation from './components/EventsNavigation';
 import { AntDesign } from '@expo/vector-icons';
-import firebase from "firebase";
-import { useDispatch } from 'react-redux';
-// save event data to store for use everywhere inside the app
-import { setEvents } from './store/eventReducer';
-import { setFirebaseUrl } from './store/firebaseReducer';
-// set firebaseurl so events can be sought at will
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// ASYNC STORAGE ASENNETTU KÄYTÄ SITÄ LAITTEEN YKSILÖIMISEEN , 
-// VAI PITÄISIKÖ SITTENKIN ANTAA KÄYTTÄJÄN ITSE VALITA, 
-// JOTTA MONET VOISIVAT TARKASTELLA SAMOJA TAPAHTUMIA
-// 
 
 const Tab = createBottomTabNavigator();
 
 export default function EventApp() {
-  const dispatch = useDispatch()
-  //const [events, setEvents] = useState([])
-
-  // PITÄIS OMAAN SERVICEEN
-
-  useEffect(() => {
-    firebase.database().ref('items').on('value', snapshot => {
-      if (snapshot.val() !== null) {
-        const data = snapshot.val();
-        const prods = Object.values(data);
-        dispatch(setEvents(prods))
-      }
-    });
-   
-  }, []);
-
 
   return (
     <NavigationContainer>
@@ -71,6 +41,7 @@ export default function EventApp() {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Events" component={EventsNavigation} />
       </Tab.Navigator>
+      
     </NavigationContainer>
   )
 }

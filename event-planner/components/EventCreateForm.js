@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
-import { Text, View, StyleSheet, TextInput, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { Button, Icon, Header, Input } from 'react-native-elements';
-import { typography, space, color } from 'styled-system'
 import firebase from 'firebase';
-import Modal from 'react-native-modal';
 import DatetimePicker from './DatetimePicker';
 import TimePicker from './TimePicker';
 import { useSelector } from 'react-redux'
-
-
 
 function EventCreateForm({ navigation }) {
   const [name, setName] = useState('');
@@ -21,8 +17,9 @@ function EventCreateForm({ navigation }) {
 
   // Save
   const saveE = () => {
+    console.log('rburl', firebaseUrl)
     if (name !== '') {
-      
+
       if (latitude === null || longitude === null) {
         firebase.database().ref(`items/${firebaseUrl}`).push({
           'name': name,
@@ -47,16 +44,12 @@ function EventCreateForm({ navigation }) {
   const clear = () => {
     navigation.goBack()
   }
+  
+  const [coordsButtonText, setCoordsButtonText] = useState('Select on map')
+  const [coordsButtonType, setCoordsButtonType] = useState('solid')
 
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
-  const [ coordsButtonText, setCoordsButtonText ] = useState('Select on map')
-  const [ coordsButtonType, setCoordsButtonType ] = useState('solid')
-
+  // TÄMÄN FUNKTION KANSSA JOKU VAROITUS, MUTTA SEN KAI VOI VAIN OHITTAA
+  // NAVIGAATIO VAROITUS SIIS
   const CallBackCoordinates = (p) => {
     setLatitude(p.latitude)
     setLongitude(p.longitude)
@@ -66,47 +59,40 @@ function EventCreateForm({ navigation }) {
 
   return (
 
-<ImageBackground
+    <ImageBackground
       source={require('../images/pilvi1.jpg')}
       resizeMode="cover"
       imageStyle={{ opacity: 0.2 }}
       style={styles.image}
     >
-
-    <View style={{ flex: 1 }}>
-
-
-      <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 18, marginTop: 10, marginBottom: 10}}>Create a new Event</Text>
-        
-        <Input
-          placeholder='name'
-          onChangeText={n => setName(n)}
-          value={name}
-        />
-        <DatetimePicker dt={dt} setDt={setDt} />
-        <TimePicker dt={dt} setDt={setDt} />
-        <View style={{width:'100%'}}>
-          <Button
-            type={coordsButtonType}
-            onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}
-            title={coordsButtonText}
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 18, marginTop: 10, marginBottom: 2 }}>Create a new Event</Text>
+          <Text style={{ fontSize: 18, marginTop: 3, marginBottom: 10 }}>event term: {firebaseUrl}</Text>
+          <Input
+            placeholder='name'
+            onChangeText={n => setName(n)}
+            value={name}
           />
+          <DatetimePicker dt={dt} setDt={setDt} />
+          <TimePicker dt={dt} setDt={setDt} />
+          <View style={{ width: '100%' }}>
+            <Button
+              type={coordsButtonType}
+              onPress={() => navigation.navigate('MapSetCoordinates', { CallBackCoordinates: CallBackCoordinates })}
+              title={coordsButtonText}
+            />
+          </View>
+          <View style={{ width: '100%', }}>
+            <Button buttonStyle={{ backgroundColor: 'green' }} style={{ width: 40 }} onPress={saveE} title='Add' />
+            <Button onPress={clear} type='outline' title='Cancel' />
+          </View>
         </View>
-
-        <View style={{ width: '100%', }}>
-          <Button buttonStyle={{backgroundColor:'green'}} style={{ width: 40 }} onPress={saveE} title='Add' />
-          <Button onPress={clear} type='outline' title='Cancel' />
-        </View>
+        <StatusBar style="auto" />
       </View>
-
-      <StatusBar style="auto" />
-    </View>
     </ImageBackground>
   );
 }
-
-
 
 const { height, width } = Dimensions.get('window');
 
@@ -137,25 +123,10 @@ const styles = StyleSheet.create({
   redtext: {
     fontSize: 18, color: 'red'
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
   image: {
     flex: 1,
     justifyContent: "center",
-    
+
   },
 });
 
