@@ -12,11 +12,9 @@ function Events({ route, navigation }) {
 
   const de = useSelector(state => state.eventReducer.events)
   const firebaseUrl = useSelector(state => state.firebaseReducer.url)
-  console.log('de', de)
   var sortedEvents = de.sort((a,b) => {
     return new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
   }).filter(a => { if(a.name !== undefined){ return a} })
-  console.log('sorted', sortedEvents)
 
   const showDate = (d) => {
     const da = new Date(d)

@@ -52,8 +52,10 @@ function Home({ navigation }) {
   // GET TERM UNDER WHICH EVENT ARE SAVED ON FIREBASE, THEN GET THE LIST OF THE EVENTS
   // RUNNING THIS WITH USEEFFECT
   const readData = async () => {
+    console.log('READDATA')
     try {
       let value = await AsyncStorage.getItem('firebaseUrl');
+      value = useSelector(state => state.firebaseReducer.url) // IDK why this is such difficult for me to understand
       if (value === null) {
         setFinderUrl('')
         value = ''
