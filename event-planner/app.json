@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "event-planner",
-    "slug": "event-planner",
+    "name": "event-planner-tuomo",
+    "slug": "event-planner-tuomo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "description": "mobile programming course project",
+    "githubUrl": "https://github.com/Nuuttu/mobiiliohjelmointi_exercises/tree/main/event-planner"
   }
 }
